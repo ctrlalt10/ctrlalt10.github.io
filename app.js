@@ -5,13 +5,16 @@ function displayAverageMood() {
   const moods = JSON.parse(localStorage.getItem('moods')) || [];
   const average = moods.length ? moods.reduce((a, b) => a + b, 0) / moods.length : 0;
   
-  const moodText = average <= 1.5 ? "😢 Very Sad"
-                : average <= 2.5 ? "😞 Sad"
-                : average <= 3.5 ? "😐 Meh"
-                : average <= 4.5 ? "🙂 Happy"
-                : "😄 Very Happy";
+  // Determine emoji and text description based on average mood
+  const moodData = average <= 1.5 ? { emoji: "😢", text: "Very Sad" }
+                : average <= 2.5 ? { emoji: "😞", text: "Sad" }
+                : average <= 3.5 ? { emoji: "😐", text: "Meh" }
+                : average <= 4.5 ? { emoji: "🙂", text: "Happy" }
+                : { emoji: "😄", text: "Very Happy" };
   
-  document.getElementById('average-mood').textContent = moodText;
+  // Display the emoji and corresponding mood description
+  document.getElementById('average-mood').textContent = moodData.emoji;
+  document.getElementById('mood-description').textContent = moodData.text;
 }
 
 // Save mood and redirect back to homepage
