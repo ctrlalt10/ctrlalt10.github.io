@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (query) {
     document.getElementById('query').textContent = query;
 
-    // Placeholder AI Functions (replace with real API calls)
+    // Fetch the AI-generated summary, courses, and jobs
     fetchSummary(query);
     fetchCourses(query);
     fetchJobs(query);
@@ -16,16 +16,36 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Fetch AI-generated summary for the topic
-function fetchSummary(query) {
-  // Replace this with an actual AI call to OpenAI or similar service
-  const summaryText = `A summary for "${query}": This is a placeholder summary. Use an AI API to generate a meaningful overview of the topic.`;
-  
-  document.getElementById('summary-text').textContent = summaryText;
+async function fetchSummary(query) {
+  const apiKey = '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'; // Replace with your OpenAI API key
+  const prompt = `Summarize the key concepts about ${query} in a few sentences.`;
+
+  try {
+    const response = await fetch('https://api.openai.com/v1/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: 'text-davinci-003', // Use GPT-4 if available
+        prompt: prompt,
+        max_tokens: 150, // Adjust token limit as needed
+        temperature: 0.7 // Adjust creativity level
+      })
+    });
+
+    const data = await response.json();
+    document.getElementById('summary-text').textContent = data.choices[0].text.trim();
+  } catch (error) {
+    console.error('Error fetching AI summary:', error);
+    document.getElementById('summary-text').textContent = 'Sorry, something went wrong while fetching the summary.';
+  }
 }
 
-// Fetch courses related to the topic
+// Fetch placeholder courses related to the topic
 function fetchCourses(query) {
-  // Replace this with an actual API call to fetch courses
+  // Placeholder course data, replace with actual API logic
   const courses = [
     { name: "CS50: Introduction to Computer Science", link: "https://cs50.harvard.edu" },
     { name: "Coursera: Machine Learning", link: "https://www.coursera.org/learn/machine-learning" }
@@ -43,9 +63,9 @@ function fetchCourses(query) {
   });
 }
 
-// Fetch job opportunities related to the topic
+// Fetch placeholder job opportunities related to the topic
 function fetchJobs(query) {
-  // Replace this with an actual API call to fetch job listings
+  // Placeholder job data, replace with actual API logic
   const jobs = [
     { title: "Software Engineer", company: "Google", link: "https://careers.google.com/jobs/results/123456-software-engineer" },
     { title: "Data Scientist", company: "Facebook", link: "https://www.facebook.com/careers/jobs/789012-data-scientist" }
