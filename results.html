@@ -8,27 +8,23 @@
 </head>
 <body>
   <header class="results-header">
-    <h1>Results for "<span id="query"></span>"</h1>
+    <h1>Results for "<span id="selected-field"></span>"</h1>
   </header>
 
   <main class="results-layout">
-    <section id="courses" class="courses-section">
-      <h2>Courses</h2>
-      <ul id="courses-list">
-        <!-- AI-Populated Course Links -->
-      </ul>
-    </section>
-
     <section id="summary" class="summary-section">
       <h2>Advice and Summary</h2>
       <p id="summary-text">Loading summary...</p>
     </section>
 
-    <section id="jobs" class="jobs-section">
-      <h2>Job Opportunities</h2>
-      <ul id="jobs-list">
-        <!-- AI-Populated Job Listings -->
-      </ul>
+    <section id="courses" class="courses-section">
+      <h2>Courses</h2>
+      <ul id="courses-list"></ul>
+    </section>
+
+    <section id="job-demand" class="job-demand-section">
+      <h2>Job Demand (2010-2024)</h2>
+      <canvas id="job-demand-chart" width="400" height="200"></canvas>
     </section>
   </main>
 
@@ -37,5 +33,6 @@
   </footer>
 
   <script src="app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
