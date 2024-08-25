@@ -1,84 +1,105 @@
 // app.js
 
+// Predefined descriptions and courses
+const fieldData = {
+  "computer science": {
+    summary: "Computer Science is the study of algorithms, data structures, and the principles of computing. It involves programming, software development, and understanding how computers work at a fundamental level.",
+    courses: [
+      { name: "CS50: Introduction to Computer Science", link: "https://cs50.harvard.edu" },
+      { name: "Coursera: Introduction to Algorithms", link: "https://www.coursera.org/learn/algorithms" }
+    ],
+    demandData: [50, 60, 65, 70, 72, 80, 85, 88, 90, 95, 100, 105, 110, 115, 120]
+  },
+  "biology": {
+    summary: "Biology is the study of living organisms, including their structure, function, growth, evolution, and interactions with their environment.",
+    courses: [
+      { name: "Coursera: Fundamentals of Biology", link: "https://www.coursera.org/learn/biology" },
+      { name: "edX: Introduction to Genetics", link: "https://www.edx.org/course/introduction-to-genetics" }
+    ],
+    demandData: [30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
+  },
+  "law": {
+    summary: "Law is the system of rules that a society or government develops to regulate behavior and maintain order, typically enforced by legal institutions.",
+    courses: [
+      { name: "edX: Introduction to Law", link: "https://www.edx.org/course/introduction-to-law" },
+      { name: "Coursera: Legal Studies", link: "https://www.coursera.org/learn/legal-studies" }
+    ],
+    demandData: [40, 42, 45, 50, 55, 60, 65, 70, 75, 78, 80, 82, 85, 88, 90]
+  }
+  // Add more fields as needed
+};
+
+// Category selection logic
+function selectCategory(category) {
+  document.getElementById('level-1').classList.add('hidden');
+  document.getElementById('level-2').classList.remove('hidden');
+
+  if (category === 'Sciences') {
+    document.getElementById('sciences-options').classList.remove('hidden');
+  } else if (category === 'Humanities') {
+    document.getElementById('humanities-options').classList.remove('hidden');
+  }
+}
+
+// Field selection logic
+function selectField(field) {
+  document.getElementById('selected-field').value = field;
+  document.getElementById('submit-selection').classList.remove('hidden');
+}
+
+// Results page logic
 document.addEventListener('DOMContentLoaded', () => {
-  // Get query from URL
   const urlParams = new URLSearchParams(window.location.search);
-  const query = urlParams.get('query');
+  const selectedField = urlParams.get('selected-field');
 
-  if (query) {
-    document.getElementById('query').textContent = query;
+  if (selectedField) {
+    document.getElementById('selected-field').textContent = selectedField;
 
-    // Fetch the AI-generated summary, courses, and jobs
-    fetchSummary(query);
-    fetchCourses(query);
-    fetchJobs(query);
+    // Display summary
+    const fieldInfo = fieldData[selectedField.toLowerCase()];
+    if (fieldInfo) {
+      document.getElementById('summary-text').textContent = fieldInfo.summary;
+
+      // Display courses
+      const coursesList = document.getElementById('courses-list');
+      fieldInfo.courses.forEach(course => {
+        const listItem = document.createElement('li');
+        const anchor = document.createElement('a');
+        anchor.href = course.link;
+        anchor.textContent = course.name;
+        anchor.target = "_blank";
+        listItem.appendChild(anchor);
+        coursesList.appendChild(listItem);
+      });
+
+      // Display job demand graph
+      renderJobDemandChart(fieldInfo.demandData);
+    }
   }
 });
 
-// Fetch AI-generated summary for the topic
-async function fetchSummary(query) {
-  const apiKey = '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'; // Replace with your OpenAI API key
-  const prompt = `Summarize the key concepts about ${query} in a few sentences.`;
-
-  try {
-    const response = await fetch('https://api.openai.com/v1/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
-      },
-      body: JSON.stringify({
-        model: 'text-davinci-003', // Use GPT-4 if available
-        prompt: prompt,
-        max_tokens: 150, // Adjust token limit as needed
-        temperature: 0.7 // Adjust creativity level
-      })
-    });
-
-    const data = await response.json();
-    document.getElementById('summary-text').textContent = data.choices[0].text.trim();
-  } catch (error) {
-    console.error('Error fetching AI summary:', error);
-    document.getElementById('summary-text').textContent = 'Sorry, something went wrong while fetching the summary.';
-  }
-}
-
-// Fetch placeholder courses related to the topic
-function fetchCourses(query) {
-  // Placeholder course data, replace with actual API logic
-  const courses = [
-    { name: "CS50: Introduction to Computer Science", link: "https://cs50.harvard.edu" },
-    { name: "Coursera: Machine Learning", link: "https://www.coursera.org/learn/machine-learning" }
-  ];
-
-  const coursesList = document.getElementById('courses-list');
-  courses.forEach(course => {
-    const listItem = document.createElement('li');
-    const anchor = document.createElement('a');
-    anchor.href = course.link;
-    anchor.textContent = course.name;
-    anchor.target = "_blank";
-    listItem.appendChild(anchor);
-    coursesList.appendChild(listItem);
-  });
-}
-
-// Fetch placeholder job opportunities related to the topic
-function fetchJobs(query) {
-  // Placeholder job data, replace with actual API logic
-  const jobs = [
-    { title: "Software Engineer", company: "Google", link: "https://careers.google.com/jobs/results/123456-software-engineer" },
-    { title: "Data Scientist", company: "Facebook", link: "https://www.facebook.com/careers/jobs/789012-data-scientist" }
-  ];
-
-  const jobsList = document.getElementById('jobs-list');
-  jobs.forEach(job => {
-    const listItem = document.createElement('li');
-    const anchor = document.createElement('a');
-    anchor.href = job.link;
-    anchor.textContent = `${job.title} at ${job.company}`;
-    anchor.target = "_blank";
-    listItem.appendChild(anchor);
-    jobsList.appendChild(listItem);
+// Job demand graph rendering using Chart.js
+function renderJobDemandChart(demandData) {
+  const ctx = document.getElementById('job-demand-chart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'],
+      datasets: [{
+        label: 'Job Demand (2010-2024)',
+        data: demandData,
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 2,
+        fill: true,
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
   });
 }
