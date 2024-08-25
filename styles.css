@@ -5,19 +5,20 @@ body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #1e1e2f;
-  color: #e4e4e7;
-  line-height: 1.6;
+  background-color: #1c1b29;
+  color: #f4f4f4;
+  text-align: center;
 }
 
 h1, h2 {
   margin: 0;
   font-weight: 600;
+  color: #ffffff;
 }
 
 header {
-  background: linear-gradient(135deg, #1f1f2e, #292943);
-  padding: 100px 20px;
+  background: linear-gradient(135deg, #2b2a38, #1c1b29);
+  padding: 60px 20px;
   color: white;
   text-align: center;
   border-bottom-left-radius: 50px;
@@ -25,18 +26,21 @@ header {
 }
 
 header h1 {
-  font-size: 3rem;
+  font-size: 2.8rem;
   color: #00d4ff;
 }
 
 .tagline {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   margin-top: 10px;
-  color: #9ca3af;
+  color: #a3a3a9;
 }
 
 form {
-  margin-top: 30px;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .selection-step {
@@ -44,71 +48,58 @@ form {
 }
 
 button {
-  padding: 10px 20px;
+  padding: 12px 24px;
   font-size: 1rem;
-  margin: 10px;
+  margin: 10px 5px;
   border: none;
   border-radius: 30px;
-  background-color: #00d4ff;
+  background-color: #ff7b72;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
-  background-color: #00b4e6;
+  background-color: #ff4b4b;
   transform: translateY(-2px);
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 5px #ff4b4b;
 }
 
 .hidden {
   display: none;
 }
 
-.results-layout {
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+/* Improved Layout for Fields */
+#level-2 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
-  padding: 20px;
-}
-
-section {
-  background-color: #292943;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-  margin-bottom: 15px;
-  font-size: 1.5rem;
-  color: #00d4ff;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-ul li {
-  margin-bottom: 10px;
-}
-
-ul li a {
-  color: #00b4e6;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-ul li a:hover {
-  color: #00d4ff;
 }
 
 footer {
-  text-align: center;
-  padding: 10px 0;
-  background-color: #1f1f2e;
-  color: #9ca3af;
-  margin-top: 20px;
+  padding: 20px;
   font-size: 0.9rem;
+  color: #888;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2.2rem;
+  }
+
+  .tagline {
+    font-size: 1.2rem;
+  }
+
+  button {
+    font-size: 0.9rem;
+    padding: 10px 18px;
+    margin: 8px;
+  }
 }
