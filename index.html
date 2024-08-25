@@ -1,42 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SkillSeeker - Find your path</title>
+  <title>SkillSeeker - Unlock Your Potential</title>
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
   <header>
-    <div class="container">
-      <h1>SkillSeeker</h1>
-      <p class="tagline">Unlock Your Potential</p>
-      <form id="selection-form">
-        <div id="level-1" class="selection-step">
-          <h2>Select a Category:</h2>
-          <button type="button" onclick="selectCategory('Sciences')">Sciences</button>
-          <button type="button" onclick="selectCategory('Humanities')">Humanities</button>
-        </div>
-
-        <div id="level-2" class="selection-step hidden">
-          <h2>Select a Field:</h2>
-          <div id="sciences-options" class="hidden">
-            <button type="button" onclick="selectField('Computer Science')">Computer Science</button>
-            <button type="button" onclick="selectField('Biology')">Biology</button>
-            <button type="button" onclick="selectField('Chemistry')">Chemistry</button>
-          </div>
-          <div id="humanities-options" class="hidden">
-            <button type="button" onclick="selectField('Law')">Law</button>
-            <button type="button" onclick="selectField('History')">History</button>
-            <button type="button" onclick="selectField('Philosophy')">Philosophy</button>
-          </div>
-        </div>
-
-        <input type="hidden" id="selected-field" name="selected-field" value="">
-        <button id="submit-selection" type="submit" class="hidden">See Results</button>
-      </form>
-    </div>
+    <h1>SkillSeeker</h1>
+    <p class="tagline">Unlock Your Potential</p>
   </header>
-  <script src="app.js"></script>
+
+  <main>
+    <form id="course-selection-form">
+      <div class="selection-step">
+        <h2>Select a Category:</h2>
+        <button type="button" id="sciences-btn">Sciences</button>
+        <button type="button" id="humanities-btn">Humanities</button>
+      </div>
+
+      <div class="selection-step hidden" id="level-2">
+        <h2>Select a Field:</h2>
+        <button type="button" class="field-btn hidden" id="computer-science-btn">Computer Science</button>
+        <button type="button" class="field-btn hidden" id="biology-btn">Biology</button>
+        <button type="button" class="field-btn hidden" id="chemistry-btn">Chemistry</button>
+        <button type="button" class="field-btn hidden" id="law-btn">Law</button>
+        <button type="button" class="field-btn hidden" id="history-btn">History</button>
+        <button type="button" class="field-btn hidden" id="philosophy-btn">Philosophy</button>
+        <button type="button" id="see-results-btn">See Results</button>
+      </div>
+    </form>
+
+    <div id="results" class="hidden">
+      <!-- Dynamic content will be displayed here -->
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 SkillSeeker. Unlock Your Potential.</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
+
 </html>
