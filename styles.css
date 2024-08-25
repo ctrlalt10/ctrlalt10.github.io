@@ -5,8 +5,8 @@ body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f7f9fc;
-  color: #333;
+  background-color: #1e1e2f;
+  color: #e4e4e7;
   line-height: 1.6;
 }
 
@@ -16,7 +16,7 @@ h1, h2 {
 }
 
 header {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #1f1f2e, #292943);
   padding: 100px 20px;
   color: white;
   text-align: center;
@@ -26,46 +26,42 @@ header {
 
 header h1 {
   font-size: 3rem;
+  color: #00d4ff;
 }
 
 .tagline {
   font-size: 1.5rem;
   margin-top: 10px;
+  color: #9ca3af;
 }
 
 form {
   margin-top: 30px;
 }
 
-input[type="text"] {
-  padding: 15px;
-  width: 60%;
-  font-size: 1rem;
-  border: none;
-  border-radius: 30px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+.selection-step {
+  margin-bottom: 20px;
 }
 
 button {
-  padding: 15px 25px;
+  padding: 10px 20px;
   font-size: 1rem;
+  margin: 10px;
   border: none;
   border-radius: 30px;
-  background-color: #ff6b6b;
+  background-color: #00d4ff;
   color: white;
   cursor: pointer;
-  margin-left: 10px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
-  background-color: #fa5252;
+  background-color: #00b4e6;
+  transform: translateY(-2px);
 }
 
-.results-header {
-  padding: 20px 0;
-  background: #f7f9fc;
-  text-align: center;
+.hidden {
+  display: none;
 }
 
 .results-layout {
@@ -76,15 +72,16 @@ button:hover {
 }
 
 section {
-  background-color: white;
+  background-color: #292943;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
   margin-bottom: 15px;
   font-size: 1.5rem;
+  color: #00d4ff;
 }
 
 ul {
@@ -97,21 +94,21 @@ ul li {
 }
 
 ul li a {
-  color: #007bff;
+  color: #00b4e6;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
 }
 
 ul li a:hover {
-  color: #0056b3;
+  color: #00d4ff;
 }
 
 footer {
   text-align: center;
   padding: 10px 0;
-  background-color: #333;
-  color: white;
+  background-color: #1f1f2e;
+  color: #9ca3af;
   margin-top: 20px;
   font-size: 0.9rem;
 }
