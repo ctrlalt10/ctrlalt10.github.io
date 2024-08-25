@@ -1,105 +1,84 @@
-// app.js
+// script.js
 
-// Predefined descriptions and courses
-const fieldData = {
-  "computer science": {
-    summary: "Computer Science is the study of algorithms, data structures, and the principles of computing. It involves programming, software development, and understanding how computers work at a fundamental level.",
-    courses: [
-      { name: "CS50: Introduction to Computer Science", link: "https://cs50.harvard.edu" },
-      { name: "Coursera: Introduction to Algorithms", link: "https://www.coursera.org/learn/algorithms" }
-    ],
-    demandData: [50, 60, 65, 70, 72, 80, 85, 88, 90, 95, 100, 105, 110, 115, 120]
-  },
-  "biology": {
-    summary: "Biology is the study of living organisms, including their structure, function, growth, evolution, and interactions with their environment.",
-    courses: [
-      { name: "Coursera: Fundamentals of Biology", link: "https://www.coursera.org/learn/biology" },
-      { name: "edX: Introduction to Genetics", link: "https://www.edx.org/course/introduction-to-genetics" }
-    ],
-    demandData: [30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
-  },
-  "law": {
-    summary: "Law is the system of rules that a society or government develops to regulate behavior and maintain order, typically enforced by legal institutions.",
-    courses: [
-      { name: "edX: Introduction to Law", link: "https://www.edx.org/course/introduction-to-law" },
-      { name: "Coursera: Legal Studies", link: "https://www.coursera.org/learn/legal-studies" }
-    ],
-    demandData: [40, 42, 45, 50, 55, 60, 65, 70, 75, 78, 80, 82, 85, 88, 90]
+document.addEventListener("DOMContentLoaded", () => {
+  const sciencesBtn = document.getElementById("sciences-btn");
+  const humanitiesBtn = document.getElementById("humanities-btn");
+  const level2 = document.getElementById("level-2");
+  const seeResultsBtn = document.getElementById("see-results-btn");
+  const resultsDiv = document.getElementById("results");
+
+  const fieldButtons = {
+    sciences: ["computer-science-btn", "biology-btn", "chemistry-btn"],
+    humanities: ["law-btn", "history-btn", "philosophy-btn"],
+  };
+
+  let selectedField = null;
+
+  sciencesBtn.addEventListener("click", () => {
+    showLevel2("sciences");
+  });
+
+  humanitiesBtn.addEventListener("click", () => {
+    showLevel2("humanities");
+  });
+
+  function showLevel2(category) {
+    level2.classList.remove("hidden");
+    resetFieldButtons();
+
+    fieldButtons[category].forEach((fieldId) => {
+      document.getElementById(fieldId).classList.remove("hidden");
+    });
   }
-  // Add more fields as needed
-};
 
-// Category selection logic
-function selectCategory(category) {
-  document.getElementById('level-1').classList.add('hidden');
-  document.getElementById('level-2').classList.remove('hidden');
-
-  if (category === 'Sciences') {
-    document.getElementById('sciences-options').classList.remove('hidden');
-  } else if (category === 'Humanities') {
-    document.getElementById('humanities-options').classList.remove('hidden');
+  function resetFieldButtons() {
+    Object.values(fieldButtons).flat().forEach((fieldId) => {
+      document.getElementById(fieldId).classList.add("hidden");
+    });
+    selectedField = null;
   }
-}
 
-// Field selection logic
-function selectField(field) {
-  document.getElementById('selected-field').value = field;
-  document.getElementById('submit-selection').classList.remove('hidden');
-}
+  document.querySelectorAll(".field-btn").forEach((button) => {
+    button.addEventListener("click", () => {
+      selectedField = button.id.replace("-btn", "");
+    });
+  });
 
-// Results page logic
-document.addEventListener('DOMContentLoaded', () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const selectedField = urlParams.get('selected-field');
-
-  if (selectedField) {
-    document.getElementById('selected-field').textContent = selectedField;
-
-    // Display summary
-    const fieldInfo = fieldData[selectedField.toLowerCase()];
-    if (fieldInfo) {
-      document.getElementById('summary-text').textContent = fieldInfo.summary;
-
-      // Display courses
-      const coursesList = document.getElementById('courses-list');
-      fieldInfo.courses.forEach(course => {
-        const listItem = document.createElement('li');
-        const anchor = document.createElement('a');
-        anchor.href = course.link;
-        anchor.textContent = course.name;
-        anchor.target = "_blank";
-        listItem.appendChild(anchor);
-        coursesList.appendChild(listItem);
-      });
-
-      // Display job demand graph
-      renderJobDemandChart(fieldInfo.demandData);
-    }
-  }
-});
-
-// Job demand graph rendering using Chart.js
-function renderJobDemandChart(demandData) {
-  const ctx = document.getElementById('job-demand-chart').getContext('2d');
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'],
-      datasets: [{
-        label: 'Job Demand (2010-2024)',
-        data: demandData,
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 2,
-        fill: true,
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
+  seeResultsBtn.addEventListener("click", () => {
+    if (selectedField) {
+      displayResults(selectedField);
+    } else {
+      alert("Please select a field.");
     }
   });
-}
+
+  function displayResults(field) {
+    const summaries = {
+      "computer-science": "Computer Science focuses on the study of algorithms, data structures, software engineering, and more.",
+      "biology": "Biology is the scientific study of life, including the structure, function, growth, and evolution of living organisms.",
+      "chemistry": "Chemistry explores the properties, composition, and behavior of substances and the changes they undergo.",
+      "law": "Law involves the system of rules created and enforced through social or governmental institutions to regulate behavior.",
+      "history": "History is the study of past events, particularly in human affairs, and its effects on the present.",
+      "philosophy": "Philosophy deals with the fundamental nature of knowledge, reality, and existence, especially as an academic discipline.",
+    };
+
+    const courses = {
+      "computer-science": ["CS50 by Harvard", "Introduction to Algorithms", "Data Structures and Programming"],
+      "biology": ["Introduction to Biology", "Molecular Biology", "Ecology and Evolution"],
+      "chemistry": ["Organic Chemistry", "Analytical Chemistry", "Inorganic Chemistry"],
+      "law": ["Constitutional Law", "Criminal Law", "International Law"],
+      "history": ["World History", "Modern European History", "Ancient Civilizations"],
+      "philosophy": ["Ethics and Moral Philosophy", "Metaphysics", "Political Philosophy"],
+    };
+
+    resultsDiv.innerHTML = `
+      <h2>${field.replace("-", " ")}</h2>
+      <p>${summaries[field]}</p>
+      <h3>Available Courses:</h3>
+      <ul>
+        ${courses[field].map((course) => `<li>${course}</li>`).join("")}
+      </ul>
+    `;
+    resultsDiv.classList.remove("hidden");
+  }
+});
